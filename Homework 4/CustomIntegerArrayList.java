@@ -47,31 +47,39 @@ public class CustomIntegerArrayList {
 
 	public ArrayList<Integer> splice(int index, int num) {
 		// TODO Implement method
+		ArrayList<Integer> newArr = new ArrayList<Integer>();
+
+		if(index<0 || index>=this.arr.size() || num==0)
+			return newArr;
+
 		int count = 0;
+		while(count<num && index<this.arr.size()) {
 
-		while(count<num) {
+			int removed=this.arr.remove(index); //once an element is removed, the original arr index-1
 
-			this.arr.remove(index);
+			newArr.add(removed);
 
 			count += 1;
 		}
-		return null;
+		return newArr;
 	}
 
-	public int[] splice(int index, int num, int[] otherArray) {
+	public ArrayList<Integer> splice(int index, int num, int[] otherArray) {
 		// TODO Implement method
-		int count = 1;
-
-		while(count<num){
-
-			otherArray[count] = this.arr.get(index);
-
-			this.arr.remove(index);
-
-			count+=1;
-
+		ArrayList<Integer> newArr = splice(index, num);
+		
+		// it's neccessary to check if newArr is empty. If empty, no need to add otherArray as Java doc indicated
+		if(!newArr.isEmpty())
+		{
+			int count = index;
+			for (int element : otherArray)
+			{
+				this.arr.add(count, element);
+				count++;
+			}
 		}
-		return otherArray;
+		
+		return newArr;
 	}
 	
 	public static void main(String args[]) {
